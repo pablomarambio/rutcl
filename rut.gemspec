@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["yo@pablomarambio.cl"]
   spec.description   = "Validación y formato de RUTs chilenos"
   spec.summary       = "Validación y formato de RUTs chilenos"
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/pablomarambio/rutcl"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

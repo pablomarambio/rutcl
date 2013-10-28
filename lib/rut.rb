@@ -2,7 +2,7 @@
 
 class Rut
 
-  VERSION = "0.0.1"
+  VERSION = "1.0.0"
 
   class << self
     def dv rut
