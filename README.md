@@ -1,29 +1,47 @@
 # Rut
 
-TODO: Write a gem description
+Valida y formatea RUTs chilenos
 
-## Installation
+## Instalación
 
-Add this line to your application's Gemfile:
+Incluye esta línea en tu Gemfile
 
+```ruby
     gem 'rut'
+```
 
-And then execute:
+Y luego ejecuta `bundle` en la carpeta de tu proyecto.
 
-    $ bundle
+## Uso
 
-Or install it yourself as:
+La gema habilita la clase Rut, la que cuenta con tres métodos:
 
-    $ gem install rut
+- `valid?(rut)` retorna `true` si el rut es válido.
+- `dv(rut)` retorna el dígito verificador del rut. El argumento debe ser un rut **sin dígito verificador**.
+- `pretty(rut, validar=true)` formatea el rut recibido como argumento.
 
-## Usage
+## Ejemplos
 
-TODO: Write usage instructions here
+```ruby
+# Validación
+Rut.valid?("16365637k") #rut válido 16.365.637-k
+#=> true
+Rut.valid?("163656370") #rut inválido 16.365.637-0
+#=> false
 
-## Contributing
+# Cómputo de dígito verificador
+Rut.dv(1) #rut 1-9
+#=> 9
+Rut.dv(16365637) #rut 16.365.637-k
+#=> "k"
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+# Formateo
+Rut.pretty("16365637k")
+#=> "16.365.637-k"
+Rut.pretty("14569484-1")
+#=> "14.569.484-1"
+Rut.pretty("14569484-0")
+  ArgumentError(El rut es inválido)
+Rut.pretty("14569484-0", false)
+#=> "14.569.484-0"
+```
