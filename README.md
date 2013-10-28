@@ -1,6 +1,6 @@
 # Rut
 
-Valida y formatea RUTs chilenos
+Valida y formatea RUTs chilenos.
 
 ## Instalación
 
@@ -41,7 +41,7 @@ Rut.pretty("16365637k")
 Rut.pretty("14569484-1")
 #=> "14.569.484-1"
 Rut.pretty("14569484-0")
-  ArgumentError(El rut es inválido)
+ArgumentError: "El rut 14569484-0 es inválido"
 Rut.pretty("14569484-0", false)
 #=> "14.569.484-0"
 ```
