@@ -5,7 +5,7 @@ require "rut"
 
 Gem::Specification.new do |spec|
   spec.name          = "rutcl"
-  spec.version       = Rut::VERSION
+  spec.version       = Rutcl::Rut::VERSION
   spec.authors       = ["Pablo Marambio"]
   spec.email         = ["yo@pablomarambio.cl"]
   spec.description   = "Validación y formato de RUTs chilenos"
