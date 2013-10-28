@@ -1,7 +1,9 @@
 #coding: utf-8
-require "rut/version"
 
 class Rut
+
+  VERSION = "0.0.1"
+
   class << self
     def dv rut
       raise ArgumentError, "El rut es nulo" if rut.nil?
