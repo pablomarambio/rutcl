@@ -19,6 +19,10 @@ class Rut
       (r==10) ? "k" : r
     end
 
+    def valid? rut
+      return true if pretty(rut) rescue false
+    end
+
     def pretty rut
       if rut.is_a? String
         rut.gsub! /[.\-\ ]/, ""
