@@ -23,7 +23,7 @@ class Rut
       return true if pretty(rut) rescue false
     end
 
-    def pretty rut
+    def pretty rut, validate=true
       if rut.is_a? String
         rut.gsub! /[.\-\ ]/, ""
         raise ArgumentError, "El rut está vacío" unless rut.length > 0
@@ -32,7 +32,7 @@ class Rut
       rut = rut.to_s
       thisdv = rut[-1, 1]
       rut = rut[0, rut.length - 1]
-      raise ArgumentError, "El rut #{rut}-#{thisdv} es inválido" unless dv(rut).to_s.upcase == thisdv.upcase
+      raise ArgumentError, "El rut #{rut}-#{thisdv} es inválido" if validate && dv(rut).to_s.upcase != thisdv.upcase
       rut = rut.reverse.gsub(/.{3}/, '\0.').gsub(/\.$/, '').reverse
       "#{rut}-#{thisdv}"
     end

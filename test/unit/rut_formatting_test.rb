@@ -20,6 +20,11 @@ describe Rut do
         assert_raises(ArgumentError) { Rut.pretty "100.001-1" }
         assert_raises(ArgumentError) { Rut.pretty "14.569.484-2" }
       end
+      it "should dismiss invalid ruts if told so" do
+        Rut.pretty("1-8", false).must_be_instance_of String
+        Rut.pretty("100.001-1", false).must_be_instance_of String
+        Rut.pretty("14.569.484-2", false).must_be_instance_of String
+      end
     end
     describe "formatting" do
       it "should work with unformatted ruts" do
