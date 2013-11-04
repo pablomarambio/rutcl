@@ -2,7 +2,7 @@
 module Rutcl
   class Rut
 
-    VERSION = "1.0.1"
+    VERSION = "1.1.0"
 
     class << self
       def dv rut
@@ -21,22 +21,35 @@ module Rutcl
         (r==10) ? "k" : r
       end
 
-      def valid? rut
-        return true if pretty(rut) rescue false
+      def valid? rut_with_dv
+        return true if format_rut_with_dv(rut_with_dv) rescue false
       end
 
-      def pretty rut, validate=true
-        if rut.is_a? String
-          rut.gsub! /[.\-\ ]/, ""
-          raise ArgumentError, "El rut está vacío" unless rut.length > 0
-          raise ArgumentError, "El rut '#{rut}' contiene caracteres inválidos" unless rut =~ /^\d{1,8}[\dkK]$/
+      def format_rut_with_dv rut_with_dv, validate=true
+        if rut_with_dv.is_a? String
+          rut_with_dv.gsub! /[.\-\ ]/, ""
+          raise ArgumentError, "El rut está vacío" unless rut_with_dv.length > 0
+          raise ArgumentError, "El rut '#{rut_with_dv}' contiene caracteres inválidos" unless rut_with_dv =~ /^\d{1,8}[\dkK]$/
         end
-        rut = rut.to_s
-        thisdv = rut[-1, 1]
-        rut = rut[0, rut.length - 1]
-        raise ArgumentError, "El rut #{rut}-#{thisdv} es inválido" if validate && dv(rut).to_s.upcase != thisdv.upcase
-        rut = rut.reverse.gsub(/.{3}/, '\0.').gsub(/\.$/, '').reverse
-        "#{rut}-#{thisdv}"
+        rut_with_dv = rut_with_dv.to_s.upcase
+        thisdv = rut_with_dv[-1, 1]
+        rut_without_dv = rut_with_dv[0, rut_with_dv.length - 1]
+        formatted_rut = format_rut_without_dv(rut_without_dv)
+        correct_dv = formatted_rut[-1, 1]
+        raise ArgumentError, "El rut #{rut_without_dv}-#{thisdv} es inválido" if validate && thisdv != correct_dv
+        formatted_rut
+      end
+
+      def format_rut_without_dv rut_without_dv
+        if rut_without_dv.is_a? String
+          rut_without_dv.gsub! /[.\ ]/, ""
+          raise ArgumentError, "El rut está vacío" unless rut_without_dv.length > 0
+          raise ArgumentError, "El rut '#{rut_without_dv}' contiene caracteres inválidos (use el método 'format_rut_with_dv' para RUTs que incluyan dígito veriicador)" unless rut_without_dv =~ /^\d{1,8}$/
+        end
+        rut_without_dv = rut_without_dv.to_s.upcase
+        dv = dv(rut_without_dv).to_s.upcase
+        rut_without_dv = rut_without_dv.reverse.gsub(/.{3}/, '\0.').gsub(/\.$/, '').reverse
+        "#{rut_without_dv}-#{dv}"
       end
     end
   end
